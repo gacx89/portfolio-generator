@@ -13,38 +13,52 @@ fs.writeFile("index.html", pageHTML, (err) => {
 const promptuser = () => {
   
   return inquirer.prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What is your name? (Required)",
-        validate: nameInput => {
-          if (nameInput) {
-            return true;
-          } else {
-            console.log("Please enter your name!");
-            return false;
-          }
+    {
+      type: "input",
+      name: "name",
+      message: "What is your name? (Required)",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log("Please enter your name!");
+          return false;
         }
       },
-      {
-        type: "input",
-        name: "github",
-        message: "Enter your GitHub Username (Required)",
-        validate: userNameInput => {
-          if (userNameInput) {
-            return true;
-          } else {
-            console.log("Please enter your Github Username!");
-            return false;
-          }
+    },
+    {
+      type: "input",
+      name: "github",
+      message: "Enter your GitHub Username (Required)",
+      validate: (userNameInput) => {
+        if (userNameInput) {
+          return true;
+        } else {
+          console.log("Please enter your Github Username!");
+          return false;
         }
       },
-      {
-        type: "input",
-        name: "about",
-        message: "Provide some information about yourself:"
+    },
+    {
+      type: "confirm",
+      name: "confirmAbout",
+      message:
+        'Would you like to enter some information about yourself for an "About" section?',
+      default: true,
+    },
+    {
+      type: "input",
+      name: "about",
+      message: "Provide some information about yourself:",
+      when: ({ confirmAbout }) => {
+        if (confirmAbout) {
+          return true;
+        } else {
+          return false;
+        }
       }
-    ]);
+    },
+  ]);
 };
 
 const promptProject = portfolioData => {
